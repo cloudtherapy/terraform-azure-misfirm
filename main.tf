@@ -35,3 +35,50 @@ resource "azurerm_subnet" "vnet_shared_gateway_subnet" {
   virtual_network_name = azurerm_virtual_network.misfirm_network.name
   address_prefixes     = ["10.65.2.0/27"]
 }
+
+resource "azurerm_local_network_gateway" "tierpoint" {
+  name                = "lgw-shared-services-tierpoint"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  gateway_address     = "66.203.72.213"
+  address_space       = ["10.227.0.0/16"]
+}
+
+resource "azurerm_public_ip" "vnet_shared_gateway_ip" {
+  name                = "pip-shared-services-vgw"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Dynamic"
+}
+
+resource "azurerm_virtual_network_gateway" "vnet_shared_gateway" {
+  name                = "vgw-shared-services"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  type     = "Vpn"
+  vpn_type = "RouteBased"
+
+  active_active = false
+  enable_bgp    = false
+  sku           = "Basic"
+
+  ip_configuration {
+    name                          = "default"
+    public_ip_address_id          = azurerm_public_ip.vnet_shared_gateway_ip.id
+    private_ip_address_allocation = "Dynamic"
+    subnet_id                     = azurerm_subnet.vnet_shared_gateway_subnet.id
+  }
+}
+
+resource "azurerm_virtual_network_gateway_connection" "connection_tierpoint" {
+  name                = "cn-shared-services-tierpoint"
+  location            = azurerm_resource_group.rg_vnet_shared_services.location
+  resource_group_name = azurerm_resource_group.rg_vnet_shared_services.name
+
+  type                       = "IPsec"
+  virtual_network_gateway_id = azurerm_virtual_network_gateway.vnet_shared_gateway.id
+  local_network_gateway_id   = azurerm_local_network_gateway.tierpoint.id
+
+  shared_key = var.vpn_passphrase
+}
