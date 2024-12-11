@@ -27,3 +27,11 @@ resource "azurerm_subnet" "misfirm_subnet_2" {
   virtual_network_name = azurerm_virtual_network.misfirm_network.name
   address_prefixes     = ["10.65.1.0/24"]
 }
+
+# Gateway Subnet
+resource "azurerm_subnet" "vnet_shared_gateway_subnet" {
+  name                 = "GatewaySubnet"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.misfirm_network.name
+  address_prefixes     = ["10.65.2.0/27"]
+}
