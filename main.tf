@@ -73,8 +73,8 @@ resource "azurerm_virtual_network_gateway" "vnet_shared_gateway" {
 
 resource "azurerm_virtual_network_gateway_connection" "connection_tierpoint" {
   name                = "cn-shared-services-tierpoint"
-  location            = azurerm_resource_group.rg_vnet_shared_services.location
-  resource_group_name = azurerm_resource_group.rg_vnet_shared_services.name
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
 
   type                       = "IPsec"
   virtual_network_gateway_id = azurerm_virtual_network_gateway.vnet_shared_gateway.id

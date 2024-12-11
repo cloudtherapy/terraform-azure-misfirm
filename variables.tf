@@ -27,3 +27,9 @@ variable "misfirm_subscription_id" {
   sensitive   = true
   description = "Subscription ID of the Azure Application"
 }
+
+variable "vpn_passphrase" {
+  type        = string
+  sensitive   = true
+  description = "VPN Passphrase"
+}
