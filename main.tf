@@ -61,7 +61,7 @@ resource "azurerm_virtual_network_gateway" "vnet_shared_gateway" {
 
   active_active = false
   enable_bgp    = false
-  sku           = "Basic"
+  sku           = "Standard"
 
   ip_configuration {
     name                          = "default"
