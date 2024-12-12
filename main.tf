@@ -4,6 +4,7 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg-shared-services"
 }
 
+# ansible public key
 resource "azurerm_ssh_public_key" "ansible" {
   name                = "ansible"
   resource_group_name = azurerm_resource_group.rg.name
