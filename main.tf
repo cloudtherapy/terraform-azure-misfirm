@@ -4,6 +4,13 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg-shared-services"
 }
 
+resource "azurerm_ssh_public_key" "ansible" {
+  name                = "ansible"
+  resource_group_name = azurerm_resource_group.rg.name
+  location            = var.resource_group_location
+  public_key          = file("~/.ssh/id_rsa.pub")
+}
+
 # Virtual Network
 resource "azurerm_virtual_network" "misfirm_network" {
   name                = "vnet-shared-10-65-0"
