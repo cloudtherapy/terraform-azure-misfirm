@@ -12,6 +12,13 @@ resource "azurerm_ssh_public_key" "ansible" {
   public_key          = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCTD8HrwW7d5xvgs0o0dXkyNFdgZwab4G9Ok2Irh7uuk0OOW/U9QyePpfHzDboSsyfSGjwG3qzn6zKncq1vg2YmaR2oOm555T5D3/faGdJ1UJbx5hqiogkfw4hXMreg/u9Ah9CuucDUKwRxQC/MhpVrGb1MAEuDd5ZKPT6QF99ssgno/ibrHdraENMsZu+FxmJZ/Ukmi6ik8eJYRlSvAEZXw2hQIEcEaYejWMnNmE06ys5xjQe30pmV2a/Wxg4NN2MrDFzCssSDARAMak5v0vGkLGTsJYx56NaKLqnOudkKnPkXK/AvvEB26L1F1kaZLyR0jrzjTuKKEuqUJReKf/MV"
 }
 
+# Network Security Group
+resource "azurerm_network_security_group" "misfirm_nsg" {
+  name                = "nsg-misfirm"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
 # Virtual Network
 resource "azurerm_virtual_network" "misfirm_network" {
   name                = "vnet-shared-10-65-0"
@@ -28,12 +35,24 @@ resource "azurerm_subnet" "misfirm_subnet_1" {
   address_prefixes     = ["10.65.0.0/24"]
 }
 
+# Subnet 1 NSG Association
+resource "azurerm_subnet_network_security_group_association" "misfirm_nsg_subnet1" {
+  subnet_id                 = azurerm_subnet.misfirm_subnet_1.id
+  network_security_group_id = azurerm_network_security_group.misfirm_nsg.id
+}
+
 # Subnet 2
 resource "azurerm_subnet" "misfirm_subnet_2" {
   name                 = "snet-shared-10-60-1-0"
   resource_group_name  = azurerm_resource_group.rg.name
   virtual_network_name = azurerm_virtual_network.misfirm_network.name
   address_prefixes     = ["10.65.1.0/24"]
+}
+
+# Subnet 2 NSG Association
+resource "azurerm_subnet_network_security_group_association" "misfirm_nsg_subnet2" {
+  subnet_id                 = azurerm_subnet.misfirm_subnet_2.id
+  network_security_group_id = azurerm_network_security_group.misfirm_nsg.id
 }
 
 # Gateway Subnet
