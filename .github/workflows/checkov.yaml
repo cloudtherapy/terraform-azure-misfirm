@@ -19,8 +19,8 @@ jobs:
     - name: Run checkov 
       id: checkov
       uses: bridgecrewio/checkov-action@master
-      with:
-        directory: /
+      #with:
+        #directory: /
         #soft_fail: true
         #api-key: ${{ secrets.BC_API_KEY }}
         #use_enforcement_rules: true
