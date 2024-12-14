@@ -75,7 +75,7 @@ resource "azurerm_public_ip" "vnet_shared_gateway_ip" {
   name                = "pip-shared-services-vgw"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
-  allocation_method   = "Dynamnic"
+  allocation_method   = "Dynamic"
   sku = "Basic"
 }
 
