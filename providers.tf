@@ -17,6 +17,8 @@ provider "azurerm" {
   client_secret   = var.misfirm_client_secret
   tenant_id       = var.misfirm_tenant_id
   subscription_id = var.misfirm_subscription_id
+
+  auxiliary_tenant_ids = var.msdn_tenant_id
 }
 
 provider "azurerm" {
@@ -26,4 +28,6 @@ provider "azurerm" {
   client_secret   = var.msdn_client_secret
   tenant_id       = var.msdn_tenant_id
   subscription_id = var.msdn_subscription_id
+
+  auxiliary_tenant_ids = var.misfirm_tenant_id
 }
