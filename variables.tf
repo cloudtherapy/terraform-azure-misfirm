@@ -28,6 +28,30 @@ variable "misfirm_subscription_id" {
   description = "Subscription ID of the Azure Application"
 }
 
+variable "msdn_client_id" {
+  type        = string
+  sensitive   = true
+  description = "Client ID of the Azure Application"
+}
+
+variable "msdn_client_secret" {
+  type        = string
+  sensitive   = true
+  description = "Client Secret of the Azure Application"
+}
+
+variable "msdn_tenant_id" {
+  type        = string
+  sensitive   = true
+  description = "Tenant ID of the Azure Application"
+}
+
+variable "msdn_subscription_id" {
+  type        = string
+  sensitive   = true
+  description = "Subscription ID of the Azure Application"
+}
+
 variable "vpn_passphrase" {
   type        = string
   sensitive   = true

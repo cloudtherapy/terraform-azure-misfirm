@@ -76,7 +76,7 @@ resource "azurerm_public_ip" "vnet_shared_gateway_ip" {
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Dynamic"
-  sku = "Basic"
+  sku                 = "Basic"
 }
 
 resource "azurerm_virtual_network_gateway" "vnet_shared_gateway" {
@@ -111,15 +111,19 @@ resource "azurerm_virtual_network_gateway_connection" "connection_tierpoint" {
   shared_key = var.vpn_passphrase
 }
 
-data "azure_virtual_network" "msdn_network" {
-  name = "vnet-shared-10-65-16"
+data "azurerm_virtual_network" "msdn_network" {
+  name                = "vnet-shared-10-65-16"
   resource_group_name = "rg-shared-services"
-  provider = azurerm.msdn
+  provider            = azurerm.msdn
 }
 
-resource "azure_virtual_network_peering" "peer-to-msdn" {
-  name = "peer_10_65_0_to_10_65_16"
-  resource_group_name = azurerm_resource_group.rg.name
-  virtual_network_name = azurerm_virtual_network.misfirm_network.name
-  remote_virtual_network_id = azurerm_virtual_network.msdn_network.id
+resource "azurerm_virtual_network_peering" "peer-to-msdn" {
+  name                         = "peer_10_65_0_to_10_65_16"
+  resource_group_name          = azurerm_resource_group.rg.name
+  virtual_network_name         = azurerm_virtual_network.misfirm_network.name
+  remote_virtual_network_id    = data.azurerm_virtual_network.msdn_network.id
+  allow_virtual_network_access = true
+  allow_forwarded_traffic      = true
+  allow_gateway_transit        = true
+  use_remote_gateways          = true
 }
