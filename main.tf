@@ -110,3 +110,16 @@ resource "azurerm_virtual_network_gateway_connection" "connection_tierpoint" {
 
   shared_key = var.vpn_passphrase
 }
+
+data "azure_virtual_network" "msdn_network" {
+  name = "vnet-shared-10-65-16"
+  resource_group_name = "rg-shared-services"
+  provider = azurerm.msdn
+}
+
+resource "azure_virtual_network_peering" "peer-to-msdn" {
+  name = "peer_10_65_0_to_10_65_16"
+  resource_group_name = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.misfirm_network.name
+  remote_virtual_network_id = azurerm_virtual_network.msdn_network.id
+}
