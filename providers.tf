@@ -18,7 +18,7 @@ provider "azurerm" {
   tenant_id       = var.misfirm_tenant_id
   subscription_id = var.misfirm_subscription_id
 
-  auxiliary_tenant_ids = var.msdn_tenant_id
+  auxiliary_tenant_ids = ["var.msdn_tenant_id"]
 }
 
 provider "azurerm" {
@@ -29,5 +29,5 @@ provider "azurerm" {
   tenant_id       = var.msdn_tenant_id
   subscription_id = var.msdn_subscription_id
 
-  auxiliary_tenant_ids = var.misfirm_tenant_id
+  auxiliary_tenant_ids = ["var.misfirm_tenant_id"]
 }
