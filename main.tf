@@ -125,5 +125,5 @@ resource "azurerm_virtual_network_peering" "peer-to-msdn" {
   allow_virtual_network_access = true
   allow_forwarded_traffic      = true
   allow_gateway_transit        = true
-  use_remote_gateways          = true
+  use_remote_gateways          = false
 }
