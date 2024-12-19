@@ -1,18 +1,3 @@
-# Create Azure AD App Registration
-resource "azuread_application" "app" {
-  display_name = "misfirm2_service_principal"
-}
-
-# Create Service Principal
-resource "azuread_service_principal" "app" {
-  application_id = azuread_application.app.application_id
-}
-
-# Create Service Principal password
-resource "azuread_service_principal_password" "app" {
-  service_principal_id = azuread_service_principal.app.id
-}
-
 # Resource Group
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location

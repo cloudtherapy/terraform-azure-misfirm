@@ -17,16 +17,3 @@ output "subnet_name_2" {
   description = "The name of the created subnet 2."
   value       = azurerm_subnet.misfirm_subnet_2.name
 }
-
-# Output the Service Principal and password
-output "appID" {
-  description = "Service Principal ID"
-  value     = azuread_service_principal.app.id
-  sensitive = true
-}
-
-output "appSecret" {
-  description = "Service Principal secret"
-  value     = azuread_service_principal_password.app.value
-  sensitive = true
-}
