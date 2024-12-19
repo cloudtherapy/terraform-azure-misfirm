@@ -1,3 +1,10 @@
+resource "azuread_application_registration" "example" {
+  display_name     = "misfirm_sp"
+  sign_in_audience = "AzureADMultipleOrgs"
+
+  homepage_url          = "https://misfirm.com/"
+}
+
 # Resource Group
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
