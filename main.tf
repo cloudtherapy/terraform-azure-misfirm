@@ -4,7 +4,7 @@ resource "time_rotating" "example" {
   rotation_days = 730
 }
 
-resource "azuread_application_registration" "example" {
+resource "azuread_application" "example" {
   display_name     = "misfirm_sp"
   identifier_uris  = ["https://misfirm.com"]
   
