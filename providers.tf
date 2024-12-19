@@ -11,12 +11,6 @@ terraform {
   }
 }
 
-provider "azuread" {
-  client_id       = var.misfirm_client_id
-  client_secret   = var.misfirm_client_secret
-  tenant_id       = var.misfirm_tenant_id
-}
-
 provider "azurerm" {
   features {}
   client_id       = var.misfirm_client_id

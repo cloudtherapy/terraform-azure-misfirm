@@ -1,24 +1,3 @@
-data "azuread_client_config" "current" {}
-
-resource "time_rotating" "example" {
-  rotation_days = 730
-}
-
-resource "azuread_application" "example" {
-  display_name     = "misfirm_sp"
-  identifier_uris  = ["https://misfirm.com"]
-  
-  sign_in_audience = "AzureADMultipleOrgs"
-
-  owners       = [data.azuread_client_config.current.object_id]
-
-  password {
-    display_name = "MySecret-1"
-    start_date   = time_rotating.example.id
-    end_date     = timeadd(time_rotating.example.id, "4320h")
-  }
-}
-
 # Resource Group
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
